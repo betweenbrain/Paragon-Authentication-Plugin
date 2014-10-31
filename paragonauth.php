@@ -59,15 +59,18 @@ class plgAuthenticationParagonauth extends JPlugin
 
 		if ($this->checkMemberAuth($credentials['username'], $individualNumber, $credentials['password'])->CheckMemberAuthResult)
 		{
-			$memberDeatils = $this->getMemberDetails($credentials['username'], $individualNumber);
+			$member = $this->getMemberDetails($credentials['username'], $individualNumber)->getMemberDetailsResult;
 
-			die('<pre>' . print_r($memberDeatils, true) . '</pre>');
-
-			$response->email    = $this->filter->clean($credentials['username']) . '@bar.com';
-			$response->status   = JAuthentication::STATUS_SUCCESS;
-			$response->type     = 'Foobar';
-			$response->username = $this->filter->clean($credentials['username']);
-			$response->password = $this->filter->clean($credentials['password']);
+			$response->email     = trim($member->Email);
+			$response->status    = JAuthentication::STATUS_SUCCESS;
+			$response->type      = 'Paragon';
+			$response->username  = $this->filter->clean($credentials['username']);
+			$response->password  = $this->filter->clean($credentials['password']);
+			$response->fullname  = trim($member->Forename) . ' ' . trim($member->Surname);
+			$response->birthdate = trim($member->Birthdate);
+			$response->gender    = trim($member->Gender);
+			$response->postcode  = trim($member->HomeAddress5);
+			$response->country   = trim($member->HomeAddress6);
 
 			return true;
 		}

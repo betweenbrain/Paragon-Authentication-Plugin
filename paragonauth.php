@@ -57,9 +57,21 @@ class plgAuthenticationParagonauth extends JPlugin
 
 		$individualNumber = $this->app->input->get('surname', '');
 
+		// Check login credentials
 		if ($this->checkMemberAuth($credentials['username'], $individualNumber, $credentials['password'])->CheckMemberAuthResult)
 		{
 			$member = $this->getMemberDetails($credentials['username'], $individualNumber)->getMemberDetailsResult;
+
+			// Check user status
+			/*
+			if (!$member->Status != 1)
+			{
+				$response->status        = JAuthentication::STATUS_DENIED;
+				$response->error_message = JText::_('JERROR_NOLOGIN_BLOCKED');
+
+				return true;
+			}
+			*/
 
 			$response->email     = trim($member->Email);
 			$response->status    = JAuthentication::STATUS_SUCCESS;
@@ -75,8 +87,11 @@ class plgAuthenticationParagonauth extends JPlugin
 			return true;
 		}
 
+		// Invalid credentials
 		$response->status        = JAuthentication::STATUS_FAILURE;
-		$response->error_message = 'Invalid username and password';
+		$response->error_message = JText::_('JGLOBAL_AUTH_INVALID_PASS');
+
+		return true;
 	}
 
 	private function checkMemberAuth($memberNumber, $individualNumber, $password)

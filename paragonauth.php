@@ -57,7 +57,7 @@ class plgAuthenticationParagonauth extends JPlugin
 
 		$individualNumber = $this->app->input->get('surname', '');
 
-		if ($this->checkMemberAuth($credentials['username'], $individualNumber, $credentials['password']))
+		if ($this->checkMemberAuth($credentials['username'], $individualNumber, $credentials['password'])->CheckMemberAuthResult)
 		{
 			$memberDeatils = $this->getMemberDetails($credentials['username'], $individualNumber);
 

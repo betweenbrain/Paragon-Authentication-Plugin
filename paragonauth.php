@@ -78,6 +78,15 @@ class plgAuthenticationParagonauth extends JPlugin
 		return true;
 	}
 
+	/**
+	 * Authenticate a user against the API
+	 *
+	 * @param $username
+	 * @param $surname
+	 * @param $password
+	 *
+	 * @return mixed
+	 */
 	private function checkMemberAuth($username, $surname, $password)
 	{
 		$params = array(
@@ -94,6 +103,13 @@ class plgAuthenticationParagonauth extends JPlugin
 		return $this->client->CheckMemberAuth($params);
 	}
 
+	/**
+	 * Retrieves the user details object from the API
+	 *
+	 * @param $username
+	 *
+	 * @return mixed
+	 */
 	private function getMemberDetails($username)
 	{
 		$params = array(

@@ -61,7 +61,7 @@ class plgAuthenticationParagonauth extends JPlugin
 			$memberDetails = $this->memberDetails($credentials['username']);
 
 			// Deny access if member status is dormant or frozen
-			if (strtolower($memberDetails->status) == 'd' || strtolower($memberDetails->status) == 'f')
+			if (strtolower($memberDetails->Status) == 'd' || strtolower($memberDetails->Status) == 'f')
 			{
 				$response->status        = JAuthentication::STATUS_DENIED;
 				$response->error_message = JText::_('JERROR_NOLOGIN_BLOCKED');

@@ -58,7 +58,7 @@ class plgAuthenticationParagonauth extends JPlugin
 		// Check login credentials
 		if ($this->checkMemberAuth($credentials['username'], $credentials['password'])->CheckMemberAuthResult)
 		{
-			$member = $this->getMemberDetails($credentials['username'])->getMemberDetailsResult;
+			$member = $this->getMemberDetails($credentials['username'])->getMemberDetailsStats2Result;
 
 			$response->email    = trim($member->Email);
 			$response->status   = JAuthentication::STATUS_SUCCESS;

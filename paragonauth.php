@@ -61,6 +61,7 @@ class plgAuthenticationParagonauth extends JPlugin
 			$member = $this->getMemberDetails($credentials['username'])->getMemberDetailsStats2Result;
 
 			$response->email    = trim($member->Email);
+			$response->fullname = trim($member->Forename) . ' ' . trim($member->Surname);
 			$response->status   = JAuthentication::STATUS_SUCCESS;
 			$response->type     = 'Paragon';
 			$response->username = $this->filter->clean($credentials['username']);
@@ -80,7 +81,6 @@ class plgAuthenticationParagonauth extends JPlugin
 	 * Authenticate a user against the API
 	 *
 	 * @param $username
-	 * @param $surname
 	 * @param $password
 	 *
 	 * @return mixed

@@ -80,7 +80,6 @@ class plgAuthenticationParagonauth extends JPlugin
 
 	private function checkMemberAuth($username, $surname, $password)
 	{
-
 		$params = array(
 			'membSysConfig'    => $this->membSysConfig,
 			'membLoginDetails' => array(
@@ -95,15 +94,14 @@ class plgAuthenticationParagonauth extends JPlugin
 		return $this->client->CheckMemberAuth($params);
 	}
 
-	private function getMemberDetails($username, $surname)
+	private function getMemberDetails($username)
 	{
 		$params = array(
-			'membSysConfig'    => $this->membSysConfig,
-			'MemberNumber'     => $username,
-			'IndividualNumber' => $surname
+			'membSysConfig' => $this->membSysConfig,
+			'Stats2'        => $username
 		);
 
-		return $this->client->getMemberDetails($params);
+		return $this->client->getMemberDetailsStats2($params);
 	}
 
 }

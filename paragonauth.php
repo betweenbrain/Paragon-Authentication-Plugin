@@ -55,12 +55,12 @@ class plgAuthenticationParagonauth extends JPlugin
 	function onUserAuthenticate($credentials, $options, &$response)
 	{
 
-		$individualNumber = $this->app->input->get('surname', '');
+		$surname = $this->app->input->get('surname', '');
 
 		// Check login credentials
-		if ($this->checkMemberAuth($credentials['username'], $individualNumber, $credentials['password'])->CheckMemberAuthResult)
+		if ($this->checkMemberAuth($credentials['username'], $surname, $credentials['password'])->CheckMemberAuthResult)
 		{
-			$member = $this->getMemberDetails($credentials['username'], $individualNumber)->getMemberDetailsResult;
+			$member = $this->getMemberDetails($credentials['username'], $surname)->getMemberDetailsResult;
 
 			$response->email    = trim($member->Email);
 			$response->status   = JAuthentication::STATUS_SUCCESS;
@@ -78,27 +78,29 @@ class plgAuthenticationParagonauth extends JPlugin
 		return true;
 	}
 
-	private function checkMemberAuth($memberNumber, $individualNumber, $password)
+	private function checkMemberAuth($username, $surname, $password)
 	{
 
 		$params = array(
 			'membSysConfig'    => $this->membSysConfig,
 			'membLoginDetails' => array(
-				'MemberNumber'     => $memberNumber,
-				'IndividualNumber' => $individualNumber,
-				'InternetPassword' => $password
+				'MemberNumber'          => '',
+				'IndividualNumber'      => '',
+				'UseAlternateSearchKey' => true,
+				'AlternateSearchKey'    => $username,
+				'InternetPassword'      => $password
 			)
 		);
 
 		return $this->client->CheckMemberAuth($params);
 	}
 
-	private function getMemberDetails($memberNumber, $individualNumber)
+	private function getMemberDetails($username, $surname)
 	{
 		$params = array(
 			'membSysConfig'    => $this->membSysConfig,
-			'MemberNumber'     => '13140',
-			'IndividualNumber' => '1'
+			'MemberNumber'     => $username,
+			'IndividualNumber' => $surname
 		);
 
 		return $this->client->getMemberDetails($params);

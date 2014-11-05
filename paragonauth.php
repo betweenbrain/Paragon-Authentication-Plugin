@@ -62,17 +62,6 @@ class plgAuthenticationParagonauth extends JPlugin
 		{
 			$member = $this->getMemberDetails($credentials['username'], $individualNumber)->getMemberDetailsResult;
 
-			// Check user status
-			/*
-			if (!$member->Status != 1)
-			{
-				$response->status        = JAuthentication::STATUS_DENIED;
-				$response->error_message = JText::_('JERROR_NOLOGIN_BLOCKED');
-
-				return true;
-			}
-			*/
-
 			$response->email     = trim($member->Email);
 			$response->status    = JAuthentication::STATUS_SUCCESS;
 			$response->type      = 'Paragon';

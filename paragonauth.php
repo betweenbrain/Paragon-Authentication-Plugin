@@ -58,10 +58,10 @@ class plgAuthenticationParagonauth extends JPlugin
 		// Check login credentials
 		if ($this->checkMemberAuth($credentials['username'], $credentials['password'])->CheckMemberAuthResult)
 		{
-			$member = $this->getMemberDetails($credentials['username'])->getMemberDetailsStats2Result;
+			$memberDetails = $this->memberDetails($credentials['username']);
 
-			$response->email    = trim($member->Email);
-			$response->fullname = trim($member->Forename) . ' ' . trim($member->Surname);
+			$response->email    = trim($memberDetails->Email);
+			$response->fullname = trim($memberDetails->Forename) . ' ' . trim($memberDetails->Surname);
 			$response->status   = JAuthentication::STATUS_SUCCESS;
 			$response->type     = 'Paragon';
 			$response->username = $this->filter->clean($credentials['username']);
@@ -108,14 +108,14 @@ class plgAuthenticationParagonauth extends JPlugin
 	 *
 	 * @return mixed
 	 */
-	private function getMemberDetails($username)
+	private function memberDetails($username)
 	{
 		$params = array(
 			'membSysConfig' => $this->membSysConfig,
 			'Stats2'        => $username
 		);
 
-		return $this->client->getMemberDetailsStats2($params);
+		return $this->client->getMemberDetailsStats2($params)->getMemberDetailsStats2Result;
 	}
 
 }

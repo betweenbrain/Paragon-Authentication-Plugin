@@ -55,12 +55,10 @@ class plgAuthenticationParagonauth extends JPlugin
 	function onUserAuthenticate($credentials, $options, &$response)
 	{
 
-		$surname = $this->app->input->get('surname', '');
-
 		// Check login credentials
-		if ($this->checkMemberAuth($credentials['username'], $surname, $credentials['password'])->CheckMemberAuthResult)
+		if ($this->checkMemberAuth($credentials['username'], $credentials['password'])->CheckMemberAuthResult)
 		{
-			$member = $this->getMemberDetails($credentials['username'], $surname)->getMemberDetailsResult;
+			$member = $this->getMemberDetails($credentials['username'])->getMemberDetailsResult;
 
 			$response->email    = trim($member->Email);
 			$response->status   = JAuthentication::STATUS_SUCCESS;
@@ -87,7 +85,7 @@ class plgAuthenticationParagonauth extends JPlugin
 	 *
 	 * @return mixed
 	 */
-	private function checkMemberAuth($username, $surname, $password)
+	private function checkMemberAuth($username, $password)
 	{
 		$params = array(
 			'membSysConfig'    => $this->membSysConfig,
